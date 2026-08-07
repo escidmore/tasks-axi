@@ -22,6 +22,7 @@ import type {
   TransitionOpts,
 } from "../model.js";
 import { HOLD_KINDS } from "../model.js";
+import { PR_URL_EXPECTED } from "../pr-url.js";
 import {
   PUBLIC_FOLLOWUP_KIND,
   assertPublicFollowupMutation,
@@ -149,7 +150,7 @@ function normalizeTypedLink(link: TaskLink): TaskLink {
   ) {
     const expected =
       link.kind === "pr"
-        ? "an http(s) pull request URL ending in /pull/<number>"
+        ? PR_URL_EXPECTED
         : link.kind === "report"
           ? "a data/<id>/report.md path"
           : "an http(s) URL";

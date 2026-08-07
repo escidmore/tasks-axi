@@ -10,6 +10,7 @@ import {
 } from "../args.js";
 import { takeBody } from "../body.js";
 import { deriveLinks, extractTags } from "../backends/markdown-grammar.js";
+import { PR_URL_EXPECTED } from "../pr-url.js";
 import { renderMutation, stateLabel, taskToJson } from "../confirm.js";
 import { requireCtx, type TasksContext } from "../context.js";
 import { blockedIds, heldTasks } from "../derive.js";
@@ -145,9 +146,7 @@ function requireTypedLinkUrl(
     !deriveLinks(url).some((link) => link.kind === kind && link.url === url)
   ) {
     const expected =
-      kind === "pr"
-        ? "an http(s) pull request URL ending in /pull/<number>"
-        : "a data/<id>/report.md path";
+      kind === "pr" ? PR_URL_EXPECTED : "a data/<id>/report.md path";
     throw new AxiError(`${flag} must be ${expected}`, "VALIDATION_ERROR");
   }
   return url;

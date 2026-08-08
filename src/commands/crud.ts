@@ -141,7 +141,8 @@ function requireTypedLinkUrl(
       `Pass ${flag}=... without line breaks`,
     ]);
   }
-  const url = checked.trim();
+  // pr URLs must already be canonical; padded input is rejected, not trimmed
+  const url = kind === "pr" ? checked : checked.trim();
   if (
     !deriveLinks(url).some((link) => link.kind === kind && link.url === url)
   ) {

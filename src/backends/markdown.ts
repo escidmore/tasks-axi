@@ -141,7 +141,9 @@ function normalizeLinkUrl(url: string): string {
 }
 
 function normalizeTypedLink(link: TaskLink): TaskLink {
-  const url = normalizeLinkUrl(link.url);
+  const normalized = normalizeLinkUrl(link.url);
+  // pr URLs must already be canonical; padded input is rejected, not trimmed
+  const url = link.kind === "pr" ? link.url : normalized;
   const derived = deriveLinks(url);
   if (
     !derived.some(
